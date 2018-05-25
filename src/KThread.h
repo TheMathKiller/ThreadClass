@@ -19,11 +19,7 @@ class thread
         void signalExit();
         int exitThread();
         static void* thread_internal(void* ptr);
-        virtual int onProcess(int millsecond = 1000){
-            usleep(millsecond*1000);
-            cout<<"zzzzzz..."<<endl;
-            return 0;
-        }
+        virtual int onProcess()= 0;
         pthread_mutex_t Lock;
     private:
         int exit;
