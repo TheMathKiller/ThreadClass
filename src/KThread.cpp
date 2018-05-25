@@ -27,7 +27,7 @@ void* thread::thread_internal(void* user)
     thread* const self = static_cast<thread*>(user);
     while(!self->exitThread())
     {
-        self->process();
+        self->onProcess();
     }
     return NULL;
 }
@@ -42,4 +42,16 @@ int thread::run()
         return -1; 
     }
     return 0;
+}
+
+void thread::signalExit(){
+    KAutoLock l(&Lock);
+    exit = 1;
+}
+
+int thread::exitThread(){
+    int ret = 0;
+    KAutoLock l(&Lock);
+    ret = (exit != 0);
+    return ret;
 }
